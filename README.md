@@ -5,6 +5,8 @@ This project was created using D3 javascript library.
 
 The feature of this project is analyze words by displaying the characters contained in the words along with its amount of occurrences as a simple bar chart.
 
+There is also a reset button to erase the current result.
+
 ### Example:
 Input:
 ```
@@ -63,5 +65,3 @@ Second Output:
 ```
 
 **Notes**: On the second output, character [" ", "d", "e", "h", "l", "o"] will have different color in the bar chart because these characters were appeared in the previous output.
-
-There is also a reset button to erase the current result.
