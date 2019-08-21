@@ -64,4 +64,4 @@ Second Output:
 {character: "o", count: 1}]
 ```
 
-**Notes**: On the second output, character [" ", "d", "e", "h", "l", "o"] will have different color in the bar chart because these characters appeared in the previous output.
+**Notes**: On the second output, character [" ", "d", "e", "h", "l", "o"] will have different color in the bar chart because these characters appeared on the previous output.
