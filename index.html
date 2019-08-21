@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<title>Letter Analyze</title>
+</head>
+<body>
+
+<section id="form">
+	<h1>Letter Analyzer</h1>
+	<input type="text" id="letter-input">
+	<button id="enter-btn">Count the Letters</button>
+	<button id="reset-btn">Reset</button>
+</section>
+<section id="result">
+	<div class="info"><div id="red-box"></div>New Characters</div>
+	<div class="info"><div id="black-box"></div>Old Characters</div>
+	<h2 id="letter"></h2>
+	<h4 id="count"></h4>
+	<div id="graph"></div>
+</section>
+
+<script src="https://d3js.org/d3.v4.js"></script>
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
