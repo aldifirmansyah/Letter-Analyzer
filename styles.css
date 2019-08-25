@@ -72,19 +72,22 @@ body {
 	background: black;
 }
 
+#letter {
+	word-wrap: break-word;
+}
+
 #graph {
-	padding: 24px;
+	margin: 12px;
 }
 
-.bar {
-	display: inline-block;
-	width: 20px;
-	margin: 5px;
-	color: white;
-	background: black;
-	vertical-align: bottom;
+rect {
+	fill: black;
 }
 
-.new {
-	background: #c92a0a;
+.new rect {
+	fill: #c92a0a;
+}
+
+.new text {
+	font-size: 1.5rem;
 }
