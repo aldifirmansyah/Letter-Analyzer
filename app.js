@@ -1,9 +1,10 @@
 const graphWidth = 600;
-const graphHeight = 200;
-const padding = 5;
-const svg = d3.select("#graph");
-d3.select("#graph").attr("height", graphHeight);
-d3.select("#graph").attr("width", graphWidth);
+const graphHeight = 400;
+const padding = 30;
+const barPadding = 5;
+const svg = d3.select("#graph")
+				.attr("height", graphHeight)
+				.attr("width", graphWidth);
 
 d3.select("#enter-btn").on("click", () => {
 	generate();
@@ -29,11 +30,21 @@ function setLetter(letter) {
 
 function setGraphAndCount(letter) {
 	let frequencies = getFrequencies(letter);
-	let maxFrequency = getMaxFreq(frequencies);
-	let currGraphHeight = maxFrequency > 8 ? graphHeight + 20 * (maxFrequency - 8) : graphHeight;
-	svg.attr("height", currGraphHeight);
+
+	let yScale = d3.scaleLinear()
+					 .domain([0, d3.max(frequencies, d => d.count)])
+					 .rangeRound([graphHeight - padding, padding]);
+
+	d3.select(".y-axis")
+		.remove();
+
+	svg.append("g")
+		.attr("transform", "translate(" + padding + ", 0)")
+		.classed("y-axis", true)
+		.call(d3.axisLeft(yScale));
+
 	let data = svg
-			     .selectAll("g")
+			     .selectAll(".bar")
 			     .data(frequencies, d => d.character);
 
 	data
@@ -41,28 +52,32 @@ function setGraphAndCount(letter) {
 		.exit()
 		.remove();
 
-	let barWidth = graphWidth / frequencies.length - padding;
+	let barWidth = (graphWidth - 2 * padding) / frequencies.length - barPadding;
 
 	let letterEnter = data
 	  .enter()
 	  .append("g")
+	  .classed("bar", true)
 	  .classed("new", true);
 
 	letterEnter.append("rect");
 	letterEnter.append("text");
 
+	let maxCount = d3.max(frequencies, d => d.count);
+	let heightPerCount = (graphHeight - 2 * padding) / maxCount;
+
 	letterEnter.merge(data)
 		.select("rect")
-		  .attr("x", (d, i) => (barWidth + padding) * i)
-		  .attr("y", d => currGraphHeight - d.count * 20)
-		  .attr("height", d => d.count * 20)
+		  .attr("x", (d, i) => (barWidth + barPadding) * i + padding)
+		  .attr("y", d => graphHeight - padding - d.count * heightPerCount)
+		  .attr("height", d => d.count * heightPerCount)
 		  .attr("width", barWidth);
 
 	letterEnter.merge(data)
 		.select("text")
 			.text(d => d.character)
-			.attr("x", (d,i) => (barWidth + padding) * i + barWidth / 2)
-			.attr("y", d => currGraphHeight - (d.count * 20 + 10))
+			.attr("x", (d,i) => (barWidth + barPadding) * i + barWidth / 2 + padding)
+			.attr("y", d => graphHeight - padding - d.count * heightPerCount - 5)
 			.attr("text-anchor", "middle");
 
 	d3.select("#count").text("(New Character: " + data.enter().nodes().length + ")");
@@ -94,5 +109,5 @@ d3.select("#reset-btn").on("click", () => {
 function clear() {
 	d3.select("#letter").text("");
 	d3.select("#count").text("");
-	d3.selectAll("rect").remove();
+	d3.selectAll("g").remove();
 }
